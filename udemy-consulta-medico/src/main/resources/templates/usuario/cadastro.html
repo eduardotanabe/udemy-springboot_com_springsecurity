@@ -58,6 +58,7 @@
 									<option value="2">Médico</option>
 									<option value="3">Paciente</option>
 								</select>
+								<input type="hidden" value="0" name="perfis">
 
 								<div class="invalid-feedback">Pelo menos um perfil é requerido.</div>
 							</div>
@@ -91,6 +92,18 @@
 
 	</section>
 	<script	th:src="~{}" th:fragment="js"></script>
-	<script th:inline="javascript" th:fragment="inlinescript"></script>
+	
+	<!-- Forma para passar os perfis (como ADMIN, Médico e Paciente) que já haviam sido selecionados antes de uma edição de um usuário, pois sem isso os perfis eram esquecidos e necessitaria lembrá-los e adicioná-los novamente -->
+	<script th:inline="javascript" th:fragment="inlinescript">
+		$('#perfis').ready(function(){
+			var perfis = [[${usuario.perfis}]];
+			$.each(perfis, function(k, v) {
+				$('#perfis option[value="'+ v.id +'"]').attr('selected', 'selected');
+			})
+		});
+	</script>
+	<!-- (sequência do raciocínio da linha acima) dizer para jquery quero acessar o id perfis, dentro do componente do id perfis vou procurar pelo componente option, dentro do componente option vou procurar pelo value, dentro value vou atribuir o valor do perfis, além disso, no componente option atribuo o selected, no jquery aponta para o atributo e depois o valor -->
+	
+	
 </body>
 </html>
