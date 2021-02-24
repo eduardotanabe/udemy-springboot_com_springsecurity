@@ -88,5 +88,16 @@ public class UsuarioService implements UserDetailsService {   // O UserDetailsSe
 				.orElseThrow(() -> new UsernameNotFoundException("Usuário inexistente!"));  // Para que o seja lançada essa exception quando é inserido usuarioId inexistente, foi mudado o tipo de retorno no UsuarioRepository para Optional. 
 																							// esta classe possui o método .orElseThrow() que irá lançar o tipo de exception que queremos se aparecer uma exception na consulta. Isso foi importante para poder ser tratado na classe ExceptionController que foi criada
 	}
+
+	public static boolean isSenhaCorreta(String senhaDigitada, String senhaArmazenada) {
+		
+		return new BCryptPasswordEncoder().matches(senhaDigitada, senhaArmazenada);
+	}
+
+	@Transactional(readOnly = false)
+	public void alterarSenha(Usuario usuario, String senha) {
+		usuario.setSenha(new BCryptPasswordEncoder().encode(senha));
+		repository.save(usuario);
+	}
 	
 }

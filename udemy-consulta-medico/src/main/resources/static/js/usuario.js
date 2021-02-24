@@ -1,4 +1,4 @@
-//datatables - lista de usuários
+//datatables - lista de médicos
 $(document).ready(function() {
 	moment.locale('pt-BR');
 	var table = $('#table-usuarios').DataTable({
@@ -50,13 +50,19 @@ $(document).ready(function() {
 		]
 	});
 	
-	$('#table-usuarios tbody').on('click', '[id*="dp_"]', function() {
-		var data = table.row($(this).parents('tr')).data();
-		var aux = new Array();
-		$.each(data.perfis, function(index, value) {
-		aux.push(value.id);
+    $('#table-usuarios tbody').on('click', '[id*="dp_"]', function () {
+    	var data = table.row($(this).parents('tr')).data();
+    	var aux = new Array();
+		$.each(data.perfis, function( index, value ) {
+			  aux.push(value.id);
 		});
 		document.location.href = '/u/editar/dados/usuario/' + data.id + '/perfis/' + aux;
-	});
+    } );	
 	
 });	
+
+$('.pass').keyup(function(){
+	$('#senha1').val() === $('#senha2').val()
+	    ? $('#senha3').removeAttr('readonly')
+	    : $('#senha3').attr('readonly', 'readonly');
+});
